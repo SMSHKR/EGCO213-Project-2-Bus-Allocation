@@ -1,6 +1,10 @@
-1, A Good Day Tour, 20, A
-2, Backpackers, 10, A
-3, Cool Trip, 60, C
-4, Discover Bangkok, 25, C
-5, ETC Travel, 45, C
-6, Food and Fun, 30, A
+1,  A Good Day Tour,  20, A
+2,  Backpackers,      10, A
+3,  Cool Trip,        60, C
+4,  Discover Bangkok, 25, C
+5,  ETC Travel,       45, C
+6,  Food and Fun,     30, A
+7,  Happy Time,       15, A
+8,  Landmark Visit,   40, C
+9,  River Cruise,     30, C
+10, Summer Vacation,  20, C
