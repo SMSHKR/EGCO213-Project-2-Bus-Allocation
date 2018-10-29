@@ -1,0 +1,3 @@
+class TicketCounter extends Thread {
+    
+}
