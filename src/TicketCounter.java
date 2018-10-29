@@ -3,10 +3,17 @@ import java.util.ArrayList;
 class TicketCounter extends Thread {
 
     // Variable
-    private ArrayList<BusLine> BL = new ArrayList<>();
+    private String infile;
+    private BusLine airport_bound;
+    private BusLine city_bound;
 
     // Constructor
-    public TicketCounter(String n) { super(n); }
+    public TicketCounter(String name, String input, BusLine airport, BusLine city) {
+        super(name);
+        infile = input;
+        airport_bound = airport;
+        city_bound = city;
+    }
 
     // Method
     @Override
