@@ -16,11 +16,9 @@ class TicketCounter extends Thread {
     private int checkpoint;
 
     // Constructor
-    public TicketCounter(String name, File input, BusLine airport, BusLine city,int check) {
+    public TicketCounter(String name, File input,int check) {
         super(name);
         infile = input;
-        airport_bound.add(airport);
-        city_bound.add(city);
         checkpoint=check;
 
     }
@@ -47,7 +45,7 @@ class TicketCounter extends Thread {
 
                     i++;
                 } else {
-                    desNum=airport_bound.get(i-1).allocateBus(seat,des);
+                    desNum=city_bound.get(i-1).allocateBus(seat,des);
                     System.out.printf("%s >> Transaction %d %10s(%2s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(),seat,desNum);
                     i++;
                 }
