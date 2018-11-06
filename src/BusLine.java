@@ -7,14 +7,19 @@ class BusLine {
     private String destination;
     private int maxSeat;
     private int full;
-    private ArrayList bus = new ArrayList();
+    private String[] seats;
     BusLine(int max)
     {
         this.maxSeat=max;
     }
+    public void add(String[] seat)
+    {
+        seats = seat;
+    }
+
 
     // Methods
-    public String[] allocateBus(String[] seat, String d) {
+    public String[] allocateBus(String[] seat, String d,BusLine bus) {
         System.out.printf("Here%s%s\n", Thread.currentThread().getName(), d);
         int st = Integer.parseInt(seat[3].trim());
         int n = 0;

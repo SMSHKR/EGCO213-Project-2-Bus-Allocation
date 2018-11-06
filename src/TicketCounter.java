@@ -5,22 +5,24 @@ import java.lang.String;
 import java.util.concurrent.CyclicBarrier;
 
 class TicketCounter extends Thread {
-    /*protected CyclicBarrier f;
+    protected CyclicBarrier f;
      public void setBarrier(CyclicBarrier e){
        f=e;
-     }*/
+     }
     // Variable
     private File infile;
-    private BusLine airport_bound;
-    private BusLine city_bound;
-    private int i;
+    private ArrayList<BusLine> airport_bound = new ArrayList<>();
+    private ArrayList<BusLine> city_bound = new ArrayList<>();
+    private int checkpoint;
 
     // Constructor
-    public TicketCounter(String name, File input, BusLine airport, BusLine city) {
+    public TicketCounter(String name, File input, BusLine airport, BusLine city,int check) {
         super(name);
         infile = input;
-        airport_bound = airport;
-        city_bound = city;
+        airport_bound.add(airport);
+        city_bound.add(city);
+        checkpoint=check;
+
     }
 
 
@@ -29,30 +31,34 @@ class TicketCounter extends Thread {
     @Override
     public void run() {
         try {
-            Scanner scan = new Scanner(new File(String.valueOf(infile)));
+            Scanner scan = new Scanner(infile);
             String s = scan.nextLine();
 
-            for (i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
 
 
                 String[] buf = s.split(",");
-                //
                 String ac = buf[3].trim();
                 String m  = buf[2].trim();
 
                 if ((ac.equals("A"))) {
-                    System.out.printf("Here%s", Thread.currentThread().getName());
-                    buf = airport_bound.allocateBus(buf, "A");
-                    System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
+                    buf = airport_bound.get(0).allocateBus(buf,"A",airport_bound.get(0));
+                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
+
                 } else {
-                    buf = city_bound.allocateBus(buf, "C");
-                    System.out.printf("Here%s\n", Thread.currentThread().getName());
-                    System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
+                    buf = city_bound.get(0).allocateBus(buf,"C",airport_bound.get(0));
+                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
+
                 }
-//f.await();
+
+                if(i==checkpoint)
+                {
+                    f.await();
+                }
                 String name = buf[1];
                 System.out.printf(name);
-                System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4].trim());
+                System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[3].trim());
+                scan.close();
                 //
 
 

@@ -13,14 +13,14 @@ class Simulation {
 
         System.out.print(Thread.currentThread().getName() + " >> Enter checkpoint = ");
         int checkpoint = scan.nextInt();
-        // CyclicBarrier r = new CyclicBarrier(checkpoint);
+        CyclicBarrier r = new CyclicBarrier(checkpoint);
         System.out.println();
 
         BusLine a = new BusLine(maxSeat);
         BusLine c = new BusLine(maxSeat);
-        TicketCounter T1 = new TicketCounter("T1", new File("in/T1.txt"), a, c);
-        TicketCounter T2 = new TicketCounter("T2", new File("in/T2.txt"), a, c);
-        TicketCounter T3 = new TicketCounter("T3", new File("in/T3.txt"), a, c);
+        TicketCounter T1 = new TicketCounter("T1", new File("in/T1.txt"), a, c,checkpoint);
+        TicketCounter T2 = new TicketCounter("T2", new File("in/T2.txt"), a, c,checkpoint);
+        TicketCounter T3 = new TicketCounter("T3", new File("in/T3.txt"), a, c,checkpoint);
         T1.start();
         T2.start();
         T3.start();
