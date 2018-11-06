@@ -34,19 +34,21 @@ class TicketCounter extends Thread {
             Scanner scan = new Scanner(infile);
             while (scan.hasNext()) {
                 int i=1;
+                String desNum;
                 String s = scan.nextLine();
                 String[] buf = s.split(",");
-                String ac = buf[3].trim();
-                String m  = buf[2].trim();
+                String des = buf[3].trim();
+                String seat  = buf[2].trim();
 
-                if ((ac.equals("A"))) {
-                    
-                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n",Thread.currentThread().getName(),i,buf[1].trim(),m,ac);
-                    //System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1], m, buf[4]);
+
+                if ((des.equals("A"))) {
+                    desNum=airport_bound.get(i-1).allocateBus(seat,des);
+                    System.out.printf("%s >> Transaction %d : %10s(%2s) bus %s\n",Thread.currentThread().getName(),i,buf[1].trim(),seat,desNum);
+
                     i++;
                 } else {
-
-                   // System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1], m, buf[4]);
+                    desNum=airport_bound.get(i-1).allocateBus(seat,des);
+                    System.out.printf("%s >> Transaction %d %10s(%2s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(),seat,desNum);
                     i++;
                 }
 
