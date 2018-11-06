@@ -13,14 +13,14 @@ class TicketCounter extends Thread {
     private File infile;
     private ArrayList<BusLine> airport_bound = new ArrayList<>();
     private ArrayList<BusLine> city_bound = new ArrayList<>();
-    private int checkpoint;
+    private int checkpoint,maxSeat;
 
     // Constructor
-    public TicketCounter(String name, File input,int check) {
+    public TicketCounter(String name, File input,int check,int max) {
         super(name);
         infile = input;
         checkpoint=check;
-
+        maxSeat= max;
     }
 
 
@@ -40,7 +40,10 @@ class TicketCounter extends Thread {
 
 
                 if ((des.equals("A"))) {
-                    desNum=airport_bound.get(i-1).allocateBus(seat,des);
+                    BusLine a = new BusLine(maxSeat);
+                    airport_bound.add(a);
+                    airport_bound.get(i-1);
+                    //desNum=airport_bound.get(i-1).allocateBus(seat,des);
                     System.out.printf("%s >> Transaction %d : %10s(%2s) bus %s\n",Thread.currentThread().getName(),i,buf[1].trim(),seat,desNum);
 
                     i++;

@@ -4,7 +4,7 @@ import java.util.Scanner;
 class BusLine {
 
     // Variable
-    private String destination;
+    private String name,destination;
     private int maxSeat;
     private int emtrySeat,fullSeat;
     private int Seat;
