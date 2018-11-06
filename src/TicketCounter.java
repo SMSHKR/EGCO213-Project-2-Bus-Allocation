@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.String;
 
@@ -11,21 +10,23 @@ class TicketCounter extends Thread {
     private int maxSeat;
     private int transactionCount = 0;
 
-    private ArrayList<BusLine> airport_bound = new ArrayList<>();
-    private ArrayList<BusLine> city_bound = new ArrayList<>();
+    private BusLine airport_bound;
+    private BusLine city_bound;
 
     // Constructor
-    public TicketCounter(String name, File input, int check, int max) {
+    public TicketCounter(String name, File input, int check, int max, BusLine airport, BusLine city) {
         super(name);
         infile = input;
         maxSeat = max;
         checkpoint = check;
+        airport_bound = airport;
+        city_bound = city;
     }
 
     // Method
-    private void printAndCount(String nameOfTourGroup, int numberOfPassenger) {
-        System.out.printf("%s >> Transaction %2d : %-20s (%2s) bus \n",
-                Thread.currentThread().getName(), ++transactionCount, nameOfTourGroup, numberOfPassenger);
+    synchronized private void printAndCount(String nameOfTourGroup, int numberOfPassenger, String busNumber) {
+        System.out.printf("%s >> Transaction %2d : %-20s (%2s seats) bus %s\n",
+                Thread.currentThread().getName(), ++transactionCount, nameOfTourGroup, numberOfPassenger, busNumber);
     }
     @Override
     public void run() {
@@ -38,12 +39,10 @@ class TicketCounter extends Thread {
                 int    numberOfPassenger = Integer.parseInt(buf[2].trim());
                 String destination       = buf[3].trim();
 
-                if ((destination.equals("A"))) {
-                    printAndCount(nameOfTourGroup, numberOfPassenger);
-                }
-                else {
-                    printAndCount(nameOfTourGroup, numberOfPassenger);
-                }
+                String busNumber;
+                if ((destination.equals("A"))) busNumber = airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination);
+                else busNumber = city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination);
+                printAndCount(nameOfTourGroup, numberOfPassenger, busNumber);
 
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
