@@ -1,12 +1,18 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 class BusLine {
 
     // Variable
-    private String name;
-    private String destination;
+    private String name,destination;
     private int maxSeat;
-    private int seat;
+    private int Seat;
+    BusLine(int max)
+    {
+        this.maxSeat=max;
+    }
 
-    BusLine(int max) { maxSeat = max; }
+
 
     // Methods
     public String allocateBus(String seat, String des) {
@@ -15,11 +21,7 @@ class BusLine {
         destination = des;
         return "Test";
 
+
     }
-
-}
-
-
-class Bus {
 
 }
