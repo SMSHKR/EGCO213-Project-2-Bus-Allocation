@@ -40,16 +40,13 @@ class TicketCounter extends Thread {
 
 
                 if ((des.equals("A"))) {
-                    BusLine a = new BusLine(maxSeat);
-                    airport_bound.add(a);
-                    airport_bound.get(i-1);
-                    //desNum=airport_bound.get(i-1).allocateBus(seat,des);
-                    System.out.printf("%s >> Transaction %d : %10s(%2s) bus %s\n",Thread.currentThread().getName(),i,buf[1].trim(),seat,desNum);
+
+                    System.out.printf("%s >> Transaction %d : %10s(%2s) bus \n",Thread.currentThread().getName(),i,buf[1].trim(),seat);
 
                     i++;
                 } else {
                     desNum=city_bound.get(i-1).allocateBus(seat,des);
-                    System.out.printf("%s >> Transaction %d %10s(%2s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(),seat,desNum);
+                    System.out.printf("%s >> Transaction %d %10s(%2s) bus \n", Thread.currentThread().getName(), i, buf[1].trim(),seat);
                     i++;
                 }
 
