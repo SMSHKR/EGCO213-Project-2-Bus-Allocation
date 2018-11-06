@@ -32,23 +32,22 @@ class TicketCounter extends Thread {
     public void run() {
         try {
             Scanner scan = new Scanner(infile);
-            String s = scan.nextLine();
-
-            for (int i = 0; i < 10; i++) {
-
-
+            while (scan.hasNext()) {
+                int i=1;
+                String s = scan.nextLine();
                 String[] buf = s.split(",");
                 String ac = buf[3].trim();
                 String m  = buf[2].trim();
 
                 if ((ac.equals("A"))) {
-                    buf = airport_bound.get(0).allocateBus(buf,"A",airport_bound.get(0));
-                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
-
+                    
+                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n",Thread.currentThread().getName(),i,buf[1].trim(),m,ac);
+                    //System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1], m, buf[4]);
+                    i++;
                 } else {
-                    buf = city_bound.get(0).allocateBus(buf,"C",airport_bound.get(0));
-                    System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[4]);
 
+                   // System.out.printf("%s>> Transaction %d %s(%s) bus %s\n", Thread.currentThread().getName(), i, buf[1], m, buf[4]);
+                    i++;
                 }
 
                 if(i==checkpoint)
@@ -56,8 +55,8 @@ class TicketCounter extends Thread {
                     f.await();
                 }
                 String name = buf[1];
-                System.out.printf(name);
-                System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[3].trim());
+                //System.out.printf(name);
+                //System.out.printf("%s>> Transaction %d %s(%s) bus %s", Thread.currentThread().getName(), i, buf[1].trim(), m, buf[3].trim());
                 scan.close();
                 //
 

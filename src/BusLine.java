@@ -20,7 +20,7 @@ class BusLine {
 
     // Methods
     public String[] allocateBus(String[] seat, String d,BusLine bus) {
-        System.out.printf("Here%s%s\n", Thread.currentThread().getName(), d);
+
         int st = Integer.parseInt(seat[3].trim());
         int n = 0;
         destination = d;
