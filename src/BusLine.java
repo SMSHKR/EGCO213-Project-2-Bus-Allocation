@@ -47,8 +47,10 @@ class Bus {
 
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {
-                bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
-                bus.peek().print(transactionCount);
+                if (numberOfPassenger + leftSeat != 0) {
+                    bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
+                    bus.peek().print(transactionCount);
+                }
                 bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
                 bus.peek().print(transactionCount);
             }
