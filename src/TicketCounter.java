@@ -3,22 +3,23 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.String;
+import java.util.concurrent.CyclicBarrier;
 
 class TicketCounter extends Thread {
     // Variable
-    private final int maxSeat;
     private int checkpoint;
     private int transactionCount = 0;
     private File infile;
     private ArrayList<BusLine> BLAL;
+    private CyclicBarrier barrier;
 
     // Constructor
-    public TicketCounter(String name, File input, int cp, int max, ArrayList<BusLine> busLines) {
+    public TicketCounter(String name, File input, int cp, ArrayList<BusLine> busLines, CyclicBarrier cb) {
         super(name);
         infile = input;
-        maxSeat = max;
         checkpoint = cp;
         BLAL = busLines;
+        barrier = cb;
     }
 
     // Method
@@ -37,6 +38,12 @@ class TicketCounter extends Thread {
                 if ((destination.equals("A")))
                      BLAL.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
                 else BLAL.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+
+                if (transactionCount == checkpoint) {
+                    try { barrier.await(); }
+                    catch (Exception e) {  }
+                }
+
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }

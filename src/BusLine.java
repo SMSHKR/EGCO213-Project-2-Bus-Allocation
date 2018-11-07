@@ -1,36 +1,25 @@
 import java.util.ArrayDeque;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 class BusLine {
-    private CyclicBarrier barrier;
 
     // Variable
     private final String destination;
     private final int maxSeat;
-    private int checkpoint;
     private int seat;
-
-
 
     private ArrayDeque<Bus> bus = new ArrayDeque<>();
 
-    BusLine(String name, int max,int check,CyclicBarrier e) {
+    BusLine(String name, int max) {
         destination = name;
-        maxSeat = max;
-        seat = maxSeat;
-        checkpoint=check;
-        barrier=e;
+        seat = maxSeat = max;
     }
 
     // Methods
+    public int getAllocated() { return bus.size(); }
     synchronized public void allocateBus(String nameOfTourGroup, int numberOfPassenger, int transactionCount) {
         seat -= numberOfPassenger;
         seat = Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount, maxSeat);
         if (seat < 0) seat = maxSeat;
-
-
-
     }
 
 }
