@@ -1,7 +1,7 @@
 class BusLine {
 
     // Variable
-    private String name
+    private String name;
     private String destination;
     private int maxSeat;
     private int seat;

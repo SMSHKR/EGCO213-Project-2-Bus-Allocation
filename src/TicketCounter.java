@@ -22,7 +22,7 @@ class TicketCounter extends Thread {
     // Method
     @Override
     public void run() {
-        try (Scanner scan = new Scanner(infile);) {
+        try (Scanner scan = new Scanner(infile)) {
             while (scan.hasNext()) {
                 int i = 1;
                 String desNum;
