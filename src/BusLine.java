@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.util.Iterator;
 
 class BusLine {
 
@@ -17,8 +18,9 @@ class BusLine {
     // Methods
     public int getAllocated() { return BAD.size(); }
     public void printSummary() {
-        for (Bus bus : BAD) {
-            bus.printTourGroupList();
+        Iterator<Bus> walker = BAD.descendingIterator();
+        while (walker.hasNext()) {
+            walker.next().printTourGroupList();
             System.out.println();
         }
     }
@@ -40,8 +42,9 @@ class Bus {
         System.out.print(Thread.currentThread().getName() + " >> " + busNumber + " : ");
         int size = TourGroupAD.size();
         int count = 0;
-        for (Group tourGroup : TourGroupAD) {
-            tourGroup.print();
+        Iterator<Group> walker = TourGroupAD.descendingIterator();
+        while (walker.hasNext()) {
+            walker.next().print();
             if (++count < size) System.out.print(", ");
         }
     }

@@ -43,12 +43,17 @@ class Simulation {
         try { barrier.await(); }
         catch (Exception e) {  }
 
-        try { T1.join(); T2.join(); T3.join();}
+        try { T1.join(); T2.join(); T3.join(); }
         catch (InterruptedException e) {  }
 
-        for (BusLine BL : BusLineArrayList) BL.printSummary();
+        System.out.println();
+        System.out.println(Thread.currentThread().getName() + " >> ===== Airport Bound =====");
+        BusLineArrayList.get(0).printSummary();
+
+        System.out.println();
+        System.out.println(Thread.currentThread().getName() + " >> ===== City Bound =====");
+        BusLineArrayList.get(1).printSummary();
 
     }
-
 
 }
