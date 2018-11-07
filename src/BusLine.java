@@ -28,8 +28,9 @@ class Bus {
     private ArrayDeque<Group> TourGroupAL = new ArrayDeque<>();
     private String busNumber;
 
-    private Bus(String tourGroup, int passenger) {
+    private Bus(String tourGroup, int passenger, String destination, ArrayDeque<Bus> BAD) {
         TourGroupAL.push(new Group(tourGroup, passenger));
+        busNumber = destination + (BAD.size());
     }
 
     private void addGroup(String tourGroup, int passenger) {
@@ -42,24 +43,29 @@ class Bus {
                 TourGroupAL.peek().getNameOfTourGroup(), TourGroupAL.peek().getNumberOfPassenger(), busNumber);
     }
 
-    private void setBusNumber(String destination ,ArrayDeque<Bus> BAD) { busNumber = destination + (BAD.size() - 1); }
-
     public static void createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount) {
 
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {
                 bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
                 bus.peek().print(transactionCount);
-                bus.push(new Bus(nameOfTourGroup, -leftSeat));
+                bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
+                bus.peek().print(transactionCount);
             }
-            else if (leftSeat == 0)
+            else if (leftSeat == 0) {
                 bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
-            else bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
+                bus.peek().print(transactionCount);
+                bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
+            }
+            else {
+                bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
+                bus.peek().print(transactionCount);
+            }
         }
-        else bus.push(new Bus(nameOfTourGroup, numberOfPassenger));
-
-        bus.peek().setBusNumber(destination, bus);
-        bus.peek().print(transactionCount);
+        else {
+            bus.push(new Bus(nameOfTourGroup, numberOfPassenger, destination, bus));
+            bus.peek().print(transactionCount);
+        }
 
     }
 }
