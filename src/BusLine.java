@@ -46,12 +46,14 @@ class Bus {
 
     public static void createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount) {
 
-        if (!bus.isEmpty() && leftSeat < 0) {
-            bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
-            bus.peek().print(transactionCount);
-            bus.push(new Bus(nameOfTourGroup, -leftSeat));
+        if (!bus.isEmpty()) {
+            if (leftSeat <= 0) {
+                bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
+                bus.peek().print(transactionCount);
+                bus.push(new Bus(nameOfTourGroup, -leftSeat));
+            }
+            else bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
         }
-        else if (!bus.isEmpty() && leftSeat == 0) bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
         else bus.push(new Bus(nameOfTourGroup, numberOfPassenger));
 
         bus.peek().setBusNumber(destination, bus);
