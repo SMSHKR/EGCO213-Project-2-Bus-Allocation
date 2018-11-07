@@ -18,7 +18,7 @@ class BusLine {
     synchronized public void allocateBus(String nameOfTourGroup, int numberOfPassenger, int transactionCount) {
         seat -= numberOfPassenger;
         Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount);
-        if (seat <= 0) seat = maxSeat;
+        if (seat < 0) seat = maxSeat;
     }
 
 }
@@ -55,7 +55,7 @@ class Bus {
             else if (leftSeat == 0) {
                 bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
                 bus.peek().print(transactionCount);
-                bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
+                //bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
             }
             else {
                 bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
