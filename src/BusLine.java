@@ -25,23 +25,31 @@ class BusLine {
 
 class Bus {
 
-    private ArrayDeque<Group> TourGroupAL = new ArrayDeque<>();
+    private ArrayDeque<Group> TourGroupAD = new ArrayDeque<>();
     private String busNumber;
 
+    public void printTourGroupList() {
+        System.out.print(Thread.currentThread().getName() + " >> " + busNumber + " : ");
+        for (Group tourGroup : TourGroupAD) {
+            tourGroup.print();
+            System.out.print(", ");
+        }
+    }
+
     private Bus(String tourGroup, int passenger, String destination, ArrayDeque<Bus> BAD) {
-        TourGroupAL.push(new Group(tourGroup, passenger));
+        TourGroupAD.push(new Group(tourGroup, passenger));
         busNumber = destination + (BAD.size());
     }
 
     private void addGroup(String tourGroup, int passenger, ArrayDeque<Bus> BAD, int transactionCount) {
-        TourGroupAL.push(new Group(tourGroup, passenger));
+        TourGroupAD.push(new Group(tourGroup, passenger));
         BAD.peek().print(transactionCount);
     }
 
     private void print(int transactionCount) {
         System.out.printf("%s >> Transaction %2d : %-20s (%2s seats) bus %s\n",
                 Thread.currentThread().getName(), transactionCount,
-                TourGroupAL.peek().getNameOfTourGroup(), TourGroupAL.peek().getNumberOfPassenger(), busNumber);
+                TourGroupAD.peek().getNameOfTourGroup(), TourGroupAD.peek().getNumberOfPassenger(), busNumber);
     }
 
     public static int createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount, int maxSeat) {
@@ -78,5 +86,7 @@ class Group {
 
     public String getNameOfTourGroup() { return nameOfTourGroup; }
     public int getNumberOfPassenger() { return numberOfPassenger; }
+
+    public void print() { System.out.printf("%-20s (%2s seats)", nameOfTourGroup, numberOfPassenger); }
 
 }
