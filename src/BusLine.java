@@ -1,25 +1,53 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+
 class BusLine {
 
     // Variable
-    private String name;
-    private String destination;
     private int maxSeat;
-    private int seat;
+    private ArrayDeque<Bus> bus = new ArrayDeque<>();
 
     BusLine(int max) { maxSeat = max; }
 
     // Methods
-    public String allocateBus(String seat, String des) {
+    synchronized public String allocateBus(String nameOfTourGroup, int numberOfPassenger, String inputDestination) {
 
-        int numOfBus=0;
-        destination = des;
-        return "Test";
+        String busNumber;
+
+        Bus temp = Bus.createBus(bus, nameOfTourGroup, numberOfPassenger, maxSeat);
+        if (temp != null) bus.add(temp);
+        busNumber = inputDestination + (bus.size() - 1);
+
+        return busNumber;
 
     }
 
 }
 
-
 class Bus {
+
+    private ArrayList<String> nameOfTourGroup = new ArrayList<>();
+    private int numberOfPassenger = 0;
+
+    private Bus(String tourGroup, int passenger) {
+        nameOfTourGroup.add(tourGroup);
+        numberOfPassenger = passenger;
+    }
+
+    private void addPassenger(int passenger) { numberOfPassenger += passenger; }
+
+    synchronized public static Bus createBus(ArrayDeque<Bus> bus, String tourGroup, int passenger, int maxSeat) {
+
+        Bus newBus = null;
+
+        if (bus.isEmpty() || bus.peek().numberOfPassenger + passenger > maxSeat)
+            newBus = new Bus(tourGroup, passenger);
+        else {
+            bus.peek().addPassenger(passenger);
+        }
+
+        return newBus;
+
+    }
 
 }
