@@ -11,12 +11,14 @@ class BusLine {
     BusLine(String name, int max) {
         destination = name;
         maxSeat = max;
+        seat = maxSeat;
     }
 
     // Methods
     synchronized public void allocateBus(String nameOfTourGroup, int numberOfPassenger, int transactionCount) {
-        seat = maxSeat - numberOfPassenger;
+        seat -= numberOfPassenger;
         Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount);
+        if (seat <= 0) seat = maxSeat;
     }
 
 }
@@ -27,11 +29,11 @@ class Bus {
     private String busNumber;
 
     private Bus(String tourGroup, int passenger) {
-        TourGroupAL.add(new Group(tourGroup, passenger));
+        TourGroupAL.push(new Group(tourGroup, passenger));
     }
 
     private void addGroup(String tourGroup, int passenger) {
-        TourGroupAL.add(new Group(tourGroup, passenger));
+        TourGroupAL.push(new Group(tourGroup, passenger));
     }
 
     private void print(int transactionCount) {
@@ -44,12 +46,13 @@ class Bus {
 
     public static void createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount) {
 
-        if (!bus.isEmpty() && leftSeat <= 0) {
+        if (!bus.isEmpty() && leftSeat < 0) {
             bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
             bus.peek().print(transactionCount);
-            bus.add(new Bus(nameOfTourGroup, leftSeat));
+            bus.push(new Bus(nameOfTourGroup, -leftSeat));
         }
-        else bus.add(new Bus(nameOfTourGroup, numberOfPassenger));
+        else if (!bus.isEmpty() && leftSeat == 0) bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
+        else bus.push(new Bus(nameOfTourGroup, numberOfPassenger));
 
         bus.peek().setBusNumber(destination, bus);
         bus.peek().print(transactionCount);

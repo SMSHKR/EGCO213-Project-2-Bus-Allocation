@@ -28,20 +28,18 @@ class TicketCounter extends Thread {
     @Override
     public void run() {
         try (Scanner scan = new Scanner(infile)) {
-
             while (scan.hasNext()) {
-                    String input = scan.nextLine();
-                    String[] buf = input.split(",");
-                    String nameOfTourGroup = buf[1].trim();
-                    int numberOfPassenger = Integer.parseInt(buf[2].trim());
-                    String destination = buf[3].trim();
 
-                    if ((destination.equals("A")))
-                         airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
-                    else city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                String input = scan.nextLine();
+                String[] buf = input.split(",");
 
+                String nameOfTourGroup = buf[1].trim();
+                int numberOfPassenger = Integer.parseInt(buf[2].trim());
+                String destination = buf[3].trim();
 
-
+                if ((destination.equals("A")))
+                    airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                else city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }
