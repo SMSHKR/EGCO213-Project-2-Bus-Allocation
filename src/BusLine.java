@@ -7,7 +7,7 @@ class BusLine {
     private final int maxSeat;
     private int seat;
 
-    private ArrayDeque<Bus> bus = new ArrayDeque<>();
+    private ArrayDeque<Bus> BAD = new ArrayDeque<>();
 
     BusLine(String name, int max) {
         destination = name;
@@ -15,17 +15,17 @@ class BusLine {
     }
 
     // Methods
-    public int getAllocated() { return bus.size(); }
+    public int getAllocated() { return BAD.size(); }
+    public void printSummary() {
+        for (Bus bus : BAD) {
+            bus.printTourGroupList();
+            System.out.println();
+        }
+    }
     synchronized public void allocateBus(String nameOfTourGroup, int numberOfPassenger, int transactionCount) {
         seat -= numberOfPassenger;
-        seat = Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount, maxSeat);
+        seat = Bus.createBus(BAD, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount, maxSeat);
         if (seat < 0) seat = maxSeat;
-    }
-    public void sent()
-    {
-        for (Bus B:bus) {
-             B.printTourGroupList();
-        }
     }
 
 
@@ -38,9 +38,11 @@ class Bus {
 
     public void printTourGroupList() {
         System.out.print(Thread.currentThread().getName() + " >> " + busNumber + " : ");
+        int size = TourGroupAD.size();
+        int count = 0;
         for (Group tourGroup : TourGroupAD) {
             tourGroup.print();
-            System.out.print(", \n");
+            if (++count < size) System.out.print(", ");
         }
     }
 

@@ -31,21 +31,22 @@ class Simulation {
         T2.start();
         T3.start();
 
-
-
         while (barrier.getNumberWaiting() < 3)
             try { Thread.sleep(100); }
             catch (InterruptedException e) {  }
 
-            System.out.println();
-            System.out.printf("%s >> %d airport-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(0).getAllocated());
-            System.out.printf("%s >> %d city-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(1).getAllocated());
-            System.out.println();
+        System.out.println();
+        System.out.printf("%s >> %d airport-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(0).getAllocated());
+        System.out.printf("%s >> %d city-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(1).getAllocated());
+        System.out.println();
 
-        try { barrier.await(); } catch (Exception e) {  }
+        try { barrier.await(); }
+        catch (Exception e) {  }
 
-        try { T1.join();T2.join();T3.join();}catch (InterruptedException e) { }
-        for(BusLine BusLine : BusLineArrayList) BusLine.sent();
+        try { T1.join(); T2.join(); T3.join();}
+        catch (InterruptedException e) {  }
+
+        for (BusLine BL : BusLineArrayList) BL.printSummary();
 
     }
 
