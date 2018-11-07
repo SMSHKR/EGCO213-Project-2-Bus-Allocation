@@ -24,25 +24,24 @@ class TicketCounter extends Thread {
     }
 
     // Method
-    synchronized private void printAndCount(String nameOfTourGroup, int numberOfPassenger, String busNumber) {
-        System.out.printf("%s >> Transaction %2d : %-20s (%2s seats) bus %s\n",
-                Thread.currentThread().getName(), ++transactionCount, nameOfTourGroup, numberOfPassenger, busNumber);
-    }
+
     @Override
     public void run() {
         try (Scanner scan = new Scanner(infile)) {
+
             while (scan.hasNext()) {
+                    String input = scan.nextLine();
+                    String[] buf = input.split(",");
+                    String nameOfTourGroup = buf[1].trim();
+                    int numberOfPassenger = Integer.parseInt(buf[2].trim());
+                    String destination = buf[3].trim();
 
-                String input             = scan.nextLine();
-                String [] buf            = input.split(",");
-                String nameOfTourGroup   = buf[1].trim();
-                int    numberOfPassenger = Integer.parseInt(buf[2].trim());
-                String destination       = buf[3].trim();
+                    String busNumber;
+                    if ((destination.equals("A")))
+                        busNumber = airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination,++transactionCount);
+                    else busNumber = city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination,++transactionCount);
 
-                String busNumber;
-                if ((destination.equals("A"))) busNumber = airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination);
-                else busNumber = city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination);
-                printAndCount(nameOfTourGroup, numberOfPassenger, busNumber);
+
 
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
