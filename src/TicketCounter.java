@@ -36,10 +36,9 @@ class TicketCounter extends Thread {
                     int numberOfPassenger = Integer.parseInt(buf[2].trim());
                     String destination = buf[3].trim();
 
-                    String busNumber;
                     if ((destination.equals("A")))
-                        busNumber = airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination,++transactionCount);
-                    else busNumber = city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, destination,++transactionCount);
+                         airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                    else city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
 
 
 

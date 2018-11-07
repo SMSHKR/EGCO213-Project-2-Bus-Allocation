@@ -14,8 +14,8 @@ class Simulation {
         System.out.print(Thread.currentThread().getName() + " >> Enter checkpoint = ");
         int checkpoint = scan.nextInt();
 
-        BusLine airport_bound = new BusLine(maxSeat);
-        BusLine city_bound    = new BusLine(maxSeat);
+        BusLine airport_bound = new BusLine("A", maxSeat);
+        BusLine city_bound    = new BusLine("C", maxSeat);
 
         CyclicBarrier barrier = new CyclicBarrier(checkpoint);
 
