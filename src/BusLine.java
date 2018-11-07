@@ -18,3 +18,8 @@ class BusLine {
     }
 
 }
+
+
+class Bus {
+
+}

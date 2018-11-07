@@ -23,26 +23,26 @@ class TicketCounter extends Thread {
     }
 
     // Method
-    private void printAndCount(String nameOfTourGroup, String seat) {
-        System.out.printf("%s >> Transaction %d : %10s(%2s) bus \n",
-                Thread.currentThread().getName(), ++transactionCount, nameOfTourGroup, seat);
+    private void printAndCount(String nameOfTourGroup, int numberOfPassenger) {
+        System.out.printf("%s >> Transaction %2d : %-20s (%2s) bus \n",
+                Thread.currentThread().getName(), ++transactionCount, nameOfTourGroup, numberOfPassenger);
     }
     @Override
     public void run() {
         try (Scanner scan = new Scanner(infile)) {
             while (scan.hasNext()) {
 
-                String input           = scan.nextLine();
-                String [] buf          = input.split(",");
-                String nameOfTourGroup = buf[1].trim();
-                String seat            = buf[2].trim();
-                String destination     = buf[3].trim();
+                String input             = scan.nextLine();
+                String [] buf            = input.split(",");
+                String nameOfTourGroup   = buf[1].trim();
+                int    numberOfPassenger = Integer.parseInt(buf[2].trim());
+                String destination       = buf[3].trim();
 
                 if ((destination.equals("A"))) {
-                    printAndCount(nameOfTourGroup, seat);
+                    printAndCount(nameOfTourGroup, numberOfPassenger);
                 }
                 else {
-                    printAndCount(nameOfTourGroup, seat);
+                    printAndCount(nameOfTourGroup, numberOfPassenger);
                 }
 
             }
