@@ -17,7 +17,7 @@ class BusLine {
     // Methods
     synchronized public void allocateBus(String nameOfTourGroup, int numberOfPassenger, int transactionCount) {
         seat -= numberOfPassenger;
-        Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount);
+        seat = Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount, maxSeat);
         if (seat < 0) seat = maxSeat;
     }
 
@@ -43,21 +43,17 @@ class Bus {
                 TourGroupAL.peek().getNameOfTourGroup(), TourGroupAL.peek().getNumberOfPassenger(), busNumber);
     }
 
-    public static void createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount) {
+    public static int createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount, int maxSeat) {
 
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {
-                if (numberOfPassenger + leftSeat != 0) {
+                if (numberOfPassenger + leftSeat > 0) {
                     bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
                     bus.peek().print(transactionCount);
                 }
                 bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
                 bus.peek().print(transactionCount);
-            }
-            else if (leftSeat == 0) {
-                bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
-                bus.peek().print(transactionCount);
-                //bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
+                if (numberOfPassenger + leftSeat == 0) return maxSeat + leftSeat;
             }
             else {
                 bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
@@ -68,6 +64,8 @@ class Bus {
             bus.push(new Bus(nameOfTourGroup, numberOfPassenger, destination, bus));
             bus.peek().print(transactionCount);
         }
+
+        return leftSeat;
 
     }
 }
