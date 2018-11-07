@@ -33,8 +33,9 @@ class Bus {
         busNumber = destination + (BAD.size());
     }
 
-    private void addGroup(String tourGroup, int passenger) {
+    private void addGroup(String tourGroup, int passenger, ArrayDeque<Bus> BAD, int transactionCount) {
         TourGroupAL.push(new Group(tourGroup, passenger));
+        BAD.peek().print(transactionCount);
     }
 
     private void print(int transactionCount) {
@@ -47,18 +48,12 @@ class Bus {
 
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {
-                if (numberOfPassenger + leftSeat > 0) {
-                    bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat);
-                    bus.peek().print(transactionCount);
-                }
+                if (numberOfPassenger + leftSeat > 0) bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat, bus, transactionCount);
                 bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
                 bus.peek().print(transactionCount);
                 if (numberOfPassenger + leftSeat == 0) return maxSeat + leftSeat;
             }
-            else {
-                bus.peek().addGroup(nameOfTourGroup, numberOfPassenger);
-                bus.peek().print(transactionCount);
-            }
+            else bus.peek().addGroup(nameOfTourGroup, numberOfPassenger, bus, transactionCount);
         }
         else {
             bus.push(new Bus(nameOfTourGroup, numberOfPassenger, destination, bus));
@@ -68,6 +63,7 @@ class Bus {
         return leftSeat;
 
     }
+
 }
 
 class Group {

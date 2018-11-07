@@ -25,8 +25,8 @@ class Simulation {
 
         System.out.println();
 
-        //T1.start();
-        //T2.start();
+        T1.start();
+        T2.start();
         T3.start();
 
     }
