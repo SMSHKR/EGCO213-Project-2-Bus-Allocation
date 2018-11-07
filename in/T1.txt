@@ -5,6 +5,6 @@
 5,  ETC Travel,       45, C
 6,  Food and Fun,     30, A
 7,  Happy Time,       15, A
-8,  Landmark Visit,   40, C
-9,  River Cruise,     30, C
-10, Summer Vacation,  20, C
+8,  LandSnow,         40, C
+9,  Mirama,           30, C
+10, Camp,             20, C

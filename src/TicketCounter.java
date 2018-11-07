@@ -10,7 +10,7 @@ class TicketCounter extends Thread {
     private int checkpoint;
     private int transactionCount = 0;
     private File infile;
-    private ArrayList<BusLine> BLAL;
+    private ArrayList<BusLine> BusLineArrayList;
     private CyclicBarrier barrier;
 
     // Constructor
@@ -18,7 +18,7 @@ class TicketCounter extends Thread {
         super(name);
         infile = input;
         checkpoint = cp;
-        BLAL = busLines;
+        BusLineArrayList = busLines;
         barrier = cb;
     }
 
@@ -36,8 +36,8 @@ class TicketCounter extends Thread {
                 String destination = buf[3].trim();
 
                 if ((destination.equals("A")))
-                     BLAL.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
-                else BLAL.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                     BusLineArrayList.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                else BusLineArrayList.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
 
                 if (transactionCount == checkpoint) {
                     try { barrier.await(); }

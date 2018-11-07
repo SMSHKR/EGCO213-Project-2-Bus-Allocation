@@ -21,6 +21,13 @@ class BusLine {
         seat = Bus.createBus(bus, nameOfTourGroup, destination, numberOfPassenger, seat, transactionCount, maxSeat);
         if (seat < 0) seat = maxSeat;
     }
+    public void sent()
+    {
+        for (Bus B:bus) {
+             B.printTourGroupList();
+        }
+    }
+
 
 }
 
@@ -33,7 +40,7 @@ class Bus {
         System.out.print(Thread.currentThread().getName() + " >> " + busNumber + " : ");
         for (Group tourGroup : TourGroupAD) {
             tourGroup.print();
-            System.out.print(", ");
+            System.out.print(", \n");
         }
     }
 

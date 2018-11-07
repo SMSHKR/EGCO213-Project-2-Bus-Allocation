@@ -4,7 +4,7 @@
 4,  Unity Tour,        15, A
 5,  Visit Bangkok,     35, C
 6,  Wow Holidays,      25, C
-7,  A Good Day Tour,   20, A
-8,  Backpackers,       10, A
-9,  Happy Time,        15, A
-10, Landmark Visit,    40, C
+7,  Kingdom,           20, A
+8,  Japan,             10, A
+9,  Tokyo,             15, A
+10, Thailand,          40, C

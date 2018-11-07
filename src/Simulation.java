@@ -1,7 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 class Simulation {
@@ -16,15 +15,15 @@ class Simulation {
         System.out.print(Thread.currentThread().getName() + " >> Enter checkpoint = ");
         int checkpoint = scan.nextInt();
 
-        ArrayList<BusLine> BLAL = new ArrayList<>();
-        BLAL.add(new BusLine("A", maxSeat));
-        BLAL.add(new BusLine("C", maxSeat));
+        ArrayList<BusLine> BusLineArrayList = new ArrayList<>();
+        BusLineArrayList.add(new BusLine("A", maxSeat));
+        BusLineArrayList.add(new BusLine("C", maxSeat));
 
         CyclicBarrier barrier = new CyclicBarrier(4);
 
-        TicketCounter T1 = new TicketCounter("T1", new File("in/T1.txt"), checkpoint, BLAL, barrier);
-        TicketCounter T2 = new TicketCounter("T2", new File("in/T2.txt"), checkpoint, BLAL, barrier);
-        TicketCounter T3 = new TicketCounter("T3", new File("in/T3.txt"), checkpoint, BLAL, barrier);
+        TicketCounter T1 = new TicketCounter("T1", new File("in/T1.txt"), checkpoint, BusLineArrayList,barrier);
+        TicketCounter T2 = new TicketCounter("T2", new File("in/T2.txt"), checkpoint, BusLineArrayList,barrier);
+        TicketCounter T3 = new TicketCounter("T3", new File("in/T3.txt"), checkpoint, BusLineArrayList,barrier);
 
         System.out.println();
 
@@ -32,17 +31,21 @@ class Simulation {
         T2.start();
         T3.start();
 
+
+
         while (barrier.getNumberWaiting() < 3)
             try { Thread.sleep(100); }
             catch (InterruptedException e) {  }
 
-        System.out.println();
-        System.out.printf("%s >> %d airport-bound buses have been allocated\n", Thread.currentThread().getName(), BLAL.get(0).getAllocated());
-        System.out.printf("%s >> %d city-bound buses have been allocated\n", Thread.currentThread().getName(), BLAL.get(1).getAllocated());
-        System.out.println();
+            System.out.println();
+            System.out.printf("%s >> %d airport-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(0).getAllocated());
+            System.out.printf("%s >> %d city-bound buses have been allocated\n", Thread.currentThread().getName(), BusLineArrayList.get(1).getAllocated());
+            System.out.println();
 
-        try { barrier.await(); }
-        catch (Exception e) {  }
+        try { barrier.await(); } catch (Exception e) {  }
+
+        try { T1.join();T2.join();T3.join();}catch (InterruptedException e) { }
+        for(BusLine BusLine : BusLineArrayList) BusLine.sent();
 
     }
 

@@ -4,7 +4,7 @@
 4,  New Adventure,    35, C
 5,  Outlet Tour,      50, A
 6,  Palace Day Trip,  10, C
-7,  A Good Day Tour,  20, A
-8,  Backpackers,      10, A
-9,  River Cruise,     30, C
-10, Summer Vacation,  20, C
+7,  A Travel Land,    20, A
+8,  DreamWorld,       10, A
+9,  RaLand,           30, C
+10, Pochinki,         20, C
