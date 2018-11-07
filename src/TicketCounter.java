@@ -1,30 +1,27 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.String;
 
 class TicketCounter extends Thread {
     // Variable
-    private File infile;
+    private final int maxSeat;
     private int checkpoint;
-    private int maxSeat;
     private int transactionCount = 0;
-
-    private BusLine airport_bound;
-    private BusLine city_bound;
+    private File infile;
+    private ArrayList<BusLine> BLAL;
 
     // Constructor
-    public TicketCounter(String name, File input, int check, int max, BusLine airport, BusLine city) {
+    public TicketCounter(String name, File input, int cp, int max, ArrayList<BusLine> busLines) {
         super(name);
         infile = input;
         maxSeat = max;
-        checkpoint = check;
-        airport_bound = airport;
-        city_bound = city;
+        checkpoint = cp;
+        BLAL = busLines;
     }
 
     // Method
-
     @Override
     public void run() {
         try (Scanner scan = new Scanner(infile)) {
@@ -38,8 +35,8 @@ class TicketCounter extends Thread {
                 String destination = buf[3].trim();
 
                 if ((destination.equals("A")))
-                    airport_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
-                else city_bound.allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                     BLAL.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                else BLAL.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }
