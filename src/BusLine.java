@@ -71,7 +71,7 @@ class Bus {
         else {
 
             int remainingPassenger = numberOfPassenger;
-            while (remainingPassenger > bus.peek().remainingSeat) {
+            if (remainingPassenger > bus.peek().remainingSeat) {
                 remainingPassenger -= bus.peek().remainingSeat;
                 bus.peek().addGroup(nameOfTourGroup, bus.peek().remainingSeat, bus, transactionCount);
                 bus.push(new Bus(destination, bus, maxSeat));
