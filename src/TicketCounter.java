@@ -35,14 +35,15 @@ class TicketCounter extends Thread {
                 int numberOfPassenger = Integer.parseInt(buf[2].trim());
                 String destination = buf[3].trim();
 
+                transactionCount++;
                 if (transactionCount == checkpoint) {
                     try { barrier.await(); }
                     catch (Exception e) {  }
                 }
 
                 if ((destination.equals("A")))
-                     BusLineArrayList.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
-                else BusLineArrayList.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
+                     BusLineArrayList.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, transactionCount);
+                else BusLineArrayList.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, transactionCount);
 
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
