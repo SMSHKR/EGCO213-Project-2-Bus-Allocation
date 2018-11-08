@@ -44,7 +44,6 @@ class TicketCounter extends Thread {
                      BusLineArrayList.get(0).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
                 else BusLineArrayList.get(1).allocateBus(nameOfTourGroup, numberOfPassenger, ++transactionCount);
 
-
             }
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }

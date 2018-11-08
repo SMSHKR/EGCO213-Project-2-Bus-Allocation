@@ -35,13 +35,13 @@ class Bus {
     private String busNumber;
     private int remainingSeat;
 
-
     private Bus(String destination, ArrayDeque<Bus> BAD, int maxSeat) {
         remainingSeat = maxSeat;
         busNumber = destination + (BAD.size());
     }
 
     private void addGroup(String tourGroup, int passenger, ArrayDeque<Bus> BAD, int transactionCount) {
+        if (passenger <= 0) return;
         TourGroupAD.push(new Group(tourGroup, passenger));
         remainingSeat -= passenger;
         BAD.peek().print(transactionCount);
@@ -82,11 +82,11 @@ class Bus {
                     bus.push(new Bus(destination, bus, maxSeat));
                 }
             }
-            if (remainingPassenger > 0)
-                bus.peek().addGroup(nameOfTourGroup, remainingPassenger, bus, transactionCount);
+            bus.peek().addGroup(nameOfTourGroup, remainingPassenger, bus, transactionCount);
 
         }
 
+        // Obsolete brute-forcing attempt
         /*
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {
