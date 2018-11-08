@@ -31,7 +31,7 @@ class Simulation {
         T2.start();
         T3.start();
 
-        while (barrier.getNumberWaiting() < 3)
+        while (barrier.getNumberWaiting() < barrier.getParties() - 1)
             try { Thread.sleep(100); }
             catch (InterruptedException e) {  }
 

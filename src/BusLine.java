@@ -39,7 +39,7 @@ class Bus {
     private String busNumber;
 
     public void printTourGroupList() {
-        System.out.print(Thread.currentThread().getName() + " >> " + busNumber + " : ");
+        System.out.printf("%s >> %-3s : ", Thread.currentThread().getName(), busNumber);
         int size = TourGroupAD.size();
         int count = 0;
         Iterator<Group> walker = TourGroupAD.descendingIterator();
@@ -72,13 +72,22 @@ class Bus {
                 if (numberOfPassenger + leftSeat > 0) bus.peek().addGroup(nameOfTourGroup, numberOfPassenger + leftSeat, bus, transactionCount);
                 bus.push(new Bus(nameOfTourGroup, -leftSeat, destination, bus));
                 bus.peek().print(transactionCount);
-                if (numberOfPassenger + leftSeat == 0) return maxSeat + leftSeat;
+                return maxSeat + leftSeat;
             }
             else bus.peek().addGroup(nameOfTourGroup, numberOfPassenger, bus, transactionCount);
         }
         else {
-            bus.push(new Bus(nameOfTourGroup, numberOfPassenger, destination, bus));
-            bus.peek().print(transactionCount);
+            if (leftSeat < 0) {
+                bus.push(new Bus(nameOfTourGroup, maxSeat, destination, bus));
+                bus.peek().print(transactionCount);
+                bus.push(new Bus(nameOfTourGroup, numberOfPassenger - maxSeat, destination, bus));
+                bus.peek().print(transactionCount);
+                return (2 * maxSeat) - numberOfPassenger;
+            }
+            else {
+                bus.push(new Bus(nameOfTourGroup, numberOfPassenger, destination, bus));
+                bus.peek().print(transactionCount);
+            }
         }
 
         return leftSeat;
