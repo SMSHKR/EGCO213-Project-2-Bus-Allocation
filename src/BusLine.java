@@ -6,7 +6,6 @@ class BusLine {
     // Variable
     private final String destination;
     private final int maxSeat;
-    private int seat;
     private ArrayDeque<Bus> BAD = new ArrayDeque<>();
 
     BusLine(String name, int max) {
