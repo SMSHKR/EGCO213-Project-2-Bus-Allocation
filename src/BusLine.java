@@ -65,7 +65,7 @@ class Bus {
                 TourGroupAD.peek().getNameOfTourGroup(), TourGroupAD.peek().getNumberOfPassenger(), busNumber);
     }
 
-    public static int createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount, int maxSeat) {
+    synchronized public static int createBus(ArrayDeque<Bus> bus, String nameOfTourGroup, String destination, int numberOfPassenger, int leftSeat, int transactionCount, int maxSeat) {
 
         if (!bus.isEmpty()) {
             if (leftSeat < 0) {

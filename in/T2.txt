@@ -1,5 +1,5 @@
 1,  Happy Time,       15, A
-2,  Landmark Visit,   40, C
+2,  Landmark Visit,   50, C
 3,  Majestic Travel,  25, A
 4,  New Adventure,    35, C
 5,  Outlet Tour,      50, A

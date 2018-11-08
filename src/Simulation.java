@@ -19,7 +19,7 @@ class Simulation {
         BusLineArrayList.add(new BusLine("A", maxSeat));
         BusLineArrayList.add(new BusLine("C", maxSeat));
 
-        CyclicBarrier barrier = new CyclicBarrier(4);
+        CyclicBarrier barrier = new CyclicBarrier(3 + 1);
 
         TicketCounter T1 = new TicketCounter("T1", new File("in/T1.txt"), checkpoint, BusLineArrayList,barrier);
         TicketCounter T2 = new TicketCounter("T2", new File("in/T2.txt"), checkpoint, BusLineArrayList,barrier);
